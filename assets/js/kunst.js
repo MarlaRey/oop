@@ -30,7 +30,7 @@ function preload() {
 function setup() {
     canvas = createCanvas(900, 600);
     canvas.parent("canvasContainer");
-  
+    background(255);
     // Fjern jakkerne ved start
     kopieredeJakker = [];
     
@@ -39,7 +39,7 @@ function setup() {
    
   }
 function draw() {
-  background(0);
+
 
   // Tegn farvede sektioner og beregn sektionsstørrelse
   let sektionHoejde = height / sektionFarver.length;
@@ -89,7 +89,7 @@ function mousePressed() {
         jakkeKopi.pixels[i] = sektionFarver[sektionIndex][0][0];
         jakkeKopi.pixels[i + 1] = sektionFarver[sektionIndex][0][1];
         jakkeKopi.pixels[i + 2] = sektionFarver[sektionIndex][0][2];
-        jakkeKopi.pixels[i + 3] = 150; // Juster alpha-værdien
+        jakkeKopi.pixels[i + 3] = 50; // Juster alpha-værdien
       }
     }
     jakkeKopi.updatePixels();

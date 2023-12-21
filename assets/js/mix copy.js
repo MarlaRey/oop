@@ -1,9 +1,23 @@
 let cols, rows;
-let tileSize = 30;
+let tileSize = 40;
 let targetTileSize = 100;
 let landscape = [];
 let jakker = [];
 let currentJacketIndex = 0;
+let canvas;
+
+let kopieredeJakker = [];
+let hoveringJakke = null;
+
+// Farver for hver sektion (RGB-værdier)
+const sektionFarver = [
+  [[48, 63, 88], [30, 42, 58]], // Sektion 1: Mørk grå og mørk blå
+  [[205, 212, 227], [127, 151, 184], [255, 231, 104]], // Sektion 2: Lysere grå, lysere blå og lys gul
+  [[234, 234, 234], [184, 204, 216]], // Sektion 3: Mørk hvid og meget lys blå
+  [[128, 128, 128], [245, 215, 105], [228, 77, 77], [86, 137, 166]], // Sektion 4: Grå, gul, rød, blå
+  [[69, 69, 69], [247, 213, 74], [228, 77, 77], [86, 113, 116], [125, 88, 69]], // Sektion 5: Mørkere grå, gul, rød, blå, brun
+  [[46, 46, 46], [30, 42, 58]], // Sektion 6: Lys sort og mørk blå
+];
 
 function preload() {
     const imagePaths = [
@@ -22,8 +36,7 @@ function setup() {
     createCanvas(900, 600, WEBGL); // Brug WEBGL-renderer
     cols = floor(width / tileSize);
     rows = floor(height / tileSize);
-
-    colorMode(HSB, 360, 100, 100);
+ 
 
     // Initialiser landskabet
     landscape = [];
@@ -40,7 +53,6 @@ function setup() {
             };
         }
     }
-    cursor('pointer');
 }
 
 function draw() {
@@ -75,7 +87,6 @@ function draw() {
             }
         }
     }
-    
 }
 
 
@@ -106,48 +117,44 @@ function mouseMoved() {
 
 function randomColor(i, j) {
     let hue;
-    let saturation = random(-100, 80);
-    let brightness = random(10, 100);
+    let saturation ;
+    let brightness ;
 
     // Opdel farvesektioner baseret på musens position
     let section = floor(map(j, 0, rows, 0, 8)); // Ændret maks til 8 for at give plads til sektion 7 og 8
 
     switch (section) {
-
-        case 0: // Ekstra sektion
-        hue = random(200, 300);
+        case 0: // Mørk grå variation baseret på en turkisblå base
+            hue = random(205);
+            saturation = (83)
+            brightness = (17);
             break;
-            case 1: // Ekstra sektion
-            hue = random(200, 240, 230);
-                break;
-            case 2: // Mørk grå, sort og mørk blå
-            hue = random(200, 240, 230);
-                break;
-            case 3: // Mørkeblå, mørkebrun, gul, rød, beige
-            hue = random(200, 240, 300);
+        case 1: // Lys grå og lys blå
+            hue = random(200, 240);
             break;
-            case 4: // Mørk grå, brun, gul, blå
-            hue = random(200, 240, 230);
-            brightness = (90);
-                break;
-            case 5: // Meget lys i hvide og gule farver, kun kvart så høj
-            hue = random(300,200);
+        case 2: // Meget lys i hvide og gule farver, kun kvart så høj
+            hue = random(36, 15);
             saturation = (93);
-            brightness = (209);
+            brightness = (82);
             j *= 40; // Gør sektionen kvart så høj
             break;
-            case 6: // Lys grå og lys blå
-            hue = random(200, 240, 230);
-            saturation = (30)
-            brightness = (50);
+        case 3: // Mørk grå, brun, gul, blå
+            hue = random(0, 30);
             break;
-            case 7: // Mørk grå variation baseret på en turkisblå base
-            hue = random(200, 300);
-            brightness = (25);
+        case 4: // Mørkeblå, mørkebrun, gul, rød, beige
+            hue = random(200, 240);
+            break;
+        case 5: // Mørk grå, sort og mørk blå
+            hue = random(0, 30);
+            break;
+        case 6: // Ekstra sektion
+            hue = random(100, 150);
+            break;
+        case 7: // Ekstra sektion
+            hue = random(50, 100);
             break;
         default:
-            hue = random(200, 300);
-            brightness = (10);
+            hue = 0;
             break;
     }
 
